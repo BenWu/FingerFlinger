@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_floating_box">
+
+    <TextView
+        android:id="@+id/pauseMenuText"
+        android:text="@string/paused"
+        android:padding="10dp"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/quitButton"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingEnd="40dp"
+        android:paddingStart="40dp"
+        android:layout_margin="10dp"
+        android:text="@string/quit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_main_buttons"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/resumeButton"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingEnd="40dp"
+        android:paddingStart="40dp"
+        android:layout_margin="10dp"
+        android:text="@string/resume_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_main_buttons"
+        android:layout_above="@id/quitButton"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

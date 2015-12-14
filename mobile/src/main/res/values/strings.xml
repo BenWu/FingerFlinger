@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Finger Flinger</string>
+
+    <string name="app_name_front">Finger</string>
+    <string name="app_name_end">Flinger</string>
+
+    <string name="main_start">Start</string>
+
+    <string name="paused">Paused</string>
+
+    <string name="game_over">Game Over</string>
+    <string name="score_text">You scored %s points</string>
+
+    <string name="confirmation_dialog">Are you sure?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="quit_button">Quit</string>
+    <string name="resume_button">Resume</string>
+    <string name="ok_button">OK</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

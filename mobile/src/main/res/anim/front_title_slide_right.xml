@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/accelerate_decelerate"
+    android:duration="500">
+
+    <translate android:fromXDelta="0" android:toXDelta="10%p"
+        android:fromYDelta="0" android:toYDelta="-5%p"/>
+
+    <rotate android:fromDegrees="25" android:toDegrees="-15"
+        android:pivotX="50%" android:pivotY="50%"/>
+
+</set>
