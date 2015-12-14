@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger.ui;
+package ca.benwu.fingerflinger.ui;
 
 import android.app.Fragment;
 import android.graphics.Typeface;
@@ -8,7 +8,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import ca.benwu.slippyfinger.R;
-import ca.benwu.slippyfinger.utils.Logutils;
+import ca.benwu.fingerflinger.R;
+import ca.benwu.fingerflinger.utils.Logutils;
 
 /**
  * Created by Ben Wu on 12/12/2015.

@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger;
+package ca.benwu.fingerflinger;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

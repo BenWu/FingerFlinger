@@ -1,8 +1,8 @@
-package ca.benwu.slippyfinger.utils;
+package ca.benwu.fingerflinger.utils;
 
 import android.util.Log;
 
-import ca.benwu.slippyfinger.BuildConfig;
+import ca.benwu.fingerflinger.BuildConfig;
 
 /**
  * Created by Ben Wu on 12/13/2015.

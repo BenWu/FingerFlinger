@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger.ui;
+package ca.benwu.fingerflinger.ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import ca.benwu.slippyfinger.R;
+import ca.benwu.fingerflinger.R;
 
 public class MainActivity extends AppCompatActivity {
 

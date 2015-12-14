@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger;
+package ca.benwu.fingerflinger;
 
 import org.junit.Test;
 

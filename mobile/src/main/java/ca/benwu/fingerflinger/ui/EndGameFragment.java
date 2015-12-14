@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger.ui;
+package ca.benwu.fingerflinger.ui;
 
 import android.app.Fragment;
 import android.graphics.Typeface;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ca.benwu.slippyfinger.R;
-import ca.benwu.slippyfinger.utils.Logutils;
+import ca.benwu.fingerflinger.R;
+import ca.benwu.fingerflinger.utils.Logutils;
 
 /**
  * Created by Ben Wu on 12/13/2015.

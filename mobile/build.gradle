@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "ca.benwu.slippyfinger"
+        applicationId "ca.benwu.fingerflinger"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
