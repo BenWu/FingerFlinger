@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger;
+package ca.benwu.slippyfinger.ui;
 
 import android.app.Fragment;
 import android.graphics.Typeface;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import ca.benwu.slippyfinger.R;
+import ca.benwu.slippyfinger.utils.Logutils;
 
 /**
  * Created by Ben Wu on 12/13/2015.
@@ -23,6 +26,8 @@ public class EndGameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Logutils.d(TAG, "OnCreate");
 
         Bundle args = getArguments();
 

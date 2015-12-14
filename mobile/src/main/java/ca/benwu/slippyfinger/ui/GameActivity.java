@@ -1,4 +1,4 @@
-package ca.benwu.slippyfinger;
+package ca.benwu.slippyfinger.ui;
 
 import android.app.Fragment;
 import android.graphics.Typeface;
@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import ca.benwu.slippyfinger.R;
+import ca.benwu.slippyfinger.utils.Logutils;
 
 /**
  * Created by Ben Wu on 12/12/2015.
@@ -81,6 +84,8 @@ public class GameActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Logutils.d(TAG, "OnCreate");
+
         setContentView(R.layout.activity_game);
 
         mGameFlipper = (ViewFlipper) findViewById(R.id.gameFlipper);
@@ -112,7 +117,7 @@ public class GameActivity extends AppCompatActivity {
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        Log.d(TAG, "width: " + width + ", height: " + height);
+        Logutils.d(TAG, "width: " + width + ", height: " + height);
         mTimeLimitBar = (ProgressBar) findViewById(R.id.timeLimitBar);
         ViewGroup.LayoutParams params = mTimeLimitBar.getLayoutParams();
         params.height = width;
@@ -153,15 +158,15 @@ public class GameActivity extends AppCompatActivity {
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
-                Log.d(TAG,"Action was DOWN");
+                Logutils.d(TAG,"Action was DOWN");
                 mFromX = (int) event.getAxisValue(MotionEvent.AXIS_X);
                 mFromY = (int) event.getAxisValue(MotionEvent.AXIS_Y);
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                //Log.d(TAG,"Action was MOVE");
+                //Logutils.d(TAG,"Action was MOVE");
                 return true;
             case (MotionEvent.ACTION_UP) :
-                Log.d(TAG, "Action was UP");
+                Logutils.d(TAG, "Action was UP");
                 mToX = (int) event.getAxisValue(MotionEvent.AXIS_X);
                 mToY = (int) event.getAxisValue(MotionEvent.AXIS_Y);
                 onTouchReleased();
@@ -178,7 +183,7 @@ public class GameActivity extends AppCompatActivity {
 
         boolean correctMovement = false;
 
-        Log.d(TAG,
+        Logutils.d(TAG,
                 "Motion: from (" + mFromX + ", " + mFromY + ") " +
                         "to (" + mToX + ", " + mToY + "), " +
                         "Change: (" + deltaX + ", " + deltaY + ")");
@@ -188,28 +193,28 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if(delta < 20) {
-            Log.d(TAG, "No move");
+            Logutils.d(TAG, "No move");
             mGameFlipper.setInAnimation(mFadeIn);
             mGameFlipper.setOutAnimation(mFadeOut);
         } else if(Math.abs(deltaX) > Math.abs(deltaY)) {
             if(deltaX > 0) {
-                Log.d(TAG, "Drag right");
+                Logutils.d(TAG, "Drag right");
                 mGameFlipper.setInAnimation(mSlideInLeft);
                 mGameFlipper.setOutAnimation(mSlideOutRight);
                 correctMovement = mCurrentDirection == RIGHT_ARROW;
             } else {
-                Log.d(TAG, "Drag left");
+                Logutils.d(TAG, "Drag left");
                 mGameFlipper.setInAnimation(mSlideInRight);
                 mGameFlipper.setOutAnimation(mSlideOutLeft);
                 correctMovement = mCurrentDirection == LEFT_ARROW;
             }
         } else if(deltaY > 0) {
-                Log.d(TAG, "Drag down");
+            Logutils.d(TAG, "Drag down");
                 mGameFlipper.setInAnimation(mSlideInTop);
                 mGameFlipper.setOutAnimation(mSlideOutBottom);
                 correctMovement = mCurrentDirection == DOWN_ARROW;
         } else {
-            Log.d(TAG, "Drag up");
+            Logutils.d(TAG, "Drag up");
             mGameFlipper.setInAnimation(mSlideInBottom);
             mGameFlipper.setOutAnimation(mSlideOutTop);
             correctMovement = mCurrentDirection == UP_ARROW;
