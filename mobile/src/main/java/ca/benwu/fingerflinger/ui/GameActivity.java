@@ -53,6 +53,8 @@ public class GameActivity extends AppCompatActivity {
     private int mErrorCount = 0;
     private TextView mScoreBox;
 
+    private View mPauseButton;
+
     private int mTimeLimit = 1000;
     private CountDownTimer mTimer;
 
@@ -122,6 +124,18 @@ public class GameActivity extends AppCompatActivity {
         params.height = width;
         params.width = height+100;
         mTimeLimitBar.requestLayout();
+
+        mPauseButton = findViewById(R.id.gamePauseButton);
+
+        // TODO: game pauses with no pause menu if click release is out of the view
+        mPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!mGamePaused && !mGameEnded) {
+                    openPauseMenu();
+                }
+            }
+        });
     }
 
     @Override
@@ -160,19 +174,18 @@ public class GameActivity extends AppCompatActivity {
                 Logutils.d(TAG,"Action was DOWN");
                 mFromX = (int) event.getAxisValue(MotionEvent.AXIS_X);
                 mFromY = (int) event.getAxisValue(MotionEvent.AXIS_Y);
-                return true;
+                break;
             case (MotionEvent.ACTION_MOVE) :
                 //Logutils.d(TAG,"Action was MOVE");
-                return true;
+                break;
             case (MotionEvent.ACTION_UP) :
                 Logutils.d(TAG, "Action was UP");
                 mToX = (int) event.getAxisValue(MotionEvent.AXIS_X);
                 mToY = (int) event.getAxisValue(MotionEvent.AXIS_Y);
                 onTouchReleased();
-                return true;
-            default :
-                return super.onTouchEvent(event);
+                break;
         }
+        return super.onTouchEvent(event);
     }
 
     private void onTouchReleased() {
@@ -279,6 +292,7 @@ public class GameActivity extends AppCompatActivity {
         mTimer = null;
         mGameEnded = true;
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, fragment).commit();
+        mPauseButton.setVisibility(View.INVISIBLE);
     }
 
     private void nextImage() {
@@ -322,6 +336,7 @@ public class GameActivity extends AppCompatActivity {
         }
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, pauseFragment).commit();
         mGamePaused = true;
+        mPauseButton.setVisibility(View.INVISIBLE);
     }
 
     public void unpause() {
@@ -329,6 +344,7 @@ public class GameActivity extends AppCompatActivity {
         mGamePaused = false;
         nextImage();
         resetTimer();
+        mPauseButton.setVisibility(View.VISIBLE);
     }
 
     private Fragment quitConfirmationFragment = new QuitConfirmationFragment();
