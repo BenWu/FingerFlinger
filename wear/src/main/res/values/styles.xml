@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="AppTheme" parent="@android:style/Theme.DeviceDefault">
+        <item name="android:textColor">@color/dark_text</item>
+    </style>
+
+    <style name="NoSwipeToDismiss" parent="AppTheme">
+        <item name="android:windowSwipeToDismiss">false</item>
+    </style>
+
+</resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundDefault">
+    
+    <ProgressBar
+        android:id="@+id/timeLimitBar"
+        android:layout_gravity="center"
+        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="270"
+        android:progressDrawable="@drawable/timer_progress" />
+
+    <!--View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/backgroundDefault" /-->
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/scoreCount"
+        android:paddingTop="15dp"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ViewFlipper
+        android:id="@+id/gameFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" >
+
+        <ImageView
+            android:id="@+id/templateArrow"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/arrow_up_white" />
+
+    </ViewFlipper>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/redXOne"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+        <ImageView
+            android:id="@+id/redXTwo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+        <ImageView
+            android:id="@+id/redXThree"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/inGameDialog"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="130dp">
+
+    </FrameLayout>
+
+</FrameLayout>
