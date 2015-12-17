@@ -200,10 +200,6 @@ public class GameActivity extends AppCompatActivity {
                         "to (" + mToX + ", " + mToY + "), " +
                         "Change: (" + deltaX + ", " + deltaY + ")");
 
-        if(mFirstMove) {
-            resetTimer();
-        }
-
         if(delta < 20) {
             Logutils.d(TAG, "No move");
             mGameFlipper.setInAnimation(mFadeIn);
@@ -236,8 +232,10 @@ public class GameActivity extends AppCompatActivity {
         } else {
             errorUp();
         }
-        resetTimer();
-        nextImage();
+        if(!mGameEnded) {
+            resetTimer();
+            nextImage();
+        }
     }
 
     private void resetTimer() {
@@ -255,8 +253,11 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                nextImage();
                 errorUp();
+                if(!mGameEnded) {
+                    resetTimer();
+                    nextImage();
+                }
             }
         };
         mTimer.start();

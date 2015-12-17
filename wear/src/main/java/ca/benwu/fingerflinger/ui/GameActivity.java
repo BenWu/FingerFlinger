@@ -175,10 +175,6 @@ public class GameActivity extends Activity {
                         "to (" + mToX + ", " + mToY + "), " +
                         "Change: (" + deltaX + ", " + deltaY + ")");
 
-        if(mFirstMove) {
-            resetTimer();
-        }
-
         if(delta < 20) {
             Logutils.d(TAG, "No move");
             mGameFlipper.setInAnimation(mFadeIn);
@@ -211,8 +207,10 @@ public class GameActivity extends Activity {
         } else {
             errorUp();
         }
-        resetTimer();
-        nextImage();
+        if(!mGameEnded) {
+            resetTimer();
+            nextImage();
+        }
     }
 
     private void resetTimer() {
@@ -232,6 +230,9 @@ public class GameActivity extends Activity {
             public void onFinish() {
                 nextImage();
                 errorUp();
+                if(!mGameEnded) {
+                    resetTimer();
+                }
             }
         };
         mTimer.start();
@@ -262,10 +263,10 @@ public class GameActivity extends Activity {
     }
 
     private void endGame() {
-        Fragment fragment = EndGameFragment.newInstance(mScoreCount);
         mTimer.cancel();
         mTimer = null;
         mGameEnded = true;
+        Fragment fragment = EndGameFragment.newInstance(mScoreCount);
         getFragmentManager().beginTransaction().replace(R.id.inGameDialog, fragment).commit();
     }
 
