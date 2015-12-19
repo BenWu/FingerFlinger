@@ -46,12 +46,14 @@ public class GameActivity extends AppCompatActivity {
     private Animation mSlideInRight;
     private Animation mSlideInLeft;
     private Animation mFadeIn;
+    private Animation mFadeInWacky;
 
     private Animation mSlideOutTop;
     private Animation mSlideOutBottom;
     private Animation mSlideOutRight;
     private Animation mSlideOutLeft;
     private Animation mFadeOut;
+    private Animation mFadeOutWacky;
 
     private int mScoreCount = 0;
     private int mErrorCount = 0;
@@ -61,9 +63,18 @@ public class GameActivity extends AppCompatActivity {
 
     private int mTimeLimit = 1000;
     private CountDownTimer mTimer;
+    private boolean mNoLives = false;
+    private boolean mTimeAttack = false;
+    private int mTimeAttackLimit = 60000;
+    private CountDownTimer mTimeAttackTimer;
+
+    private boolean mWackyAnim = false;
+    private boolean mEasyAnim = false;
+    private boolean mNoAnim = false;
 
     private boolean mGameEnded = false;
-    private boolean mGamePaused = false;
+    private boolean mGamePaused = true;
+    private boolean mGameStarted = false;
     private boolean mInDialog = false;
 
     // constants corresponding to index of arrays
@@ -103,12 +114,14 @@ public class GameActivity extends AppCompatActivity {
         mSlideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_from_right);
         mSlideInLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_from_left);
         mFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in_normal);
+        mFadeInWacky = AnimationUtils.loadAnimation(this, R.anim.fade_in_normal);
 
         mSlideOutTop = AnimationUtils.loadAnimation(this, R.anim.slide_out_to_top);
         mSlideOutBottom = AnimationUtils.loadAnimation(this, R.anim.slide_out_to_bottom);
         mSlideOutRight = AnimationUtils.loadAnimation(this, R.anim.slide_out_to_right);
         mSlideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_to_left);
         mFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out_normal);
+        mFadeOutWacky = AnimationUtils.loadAnimation(this, R.anim.fade_out_wacky);
 
         mInAnims = new Animation[] {mSlideInTop, mSlideInRight, mSlideInBottom, mSlideInLeft};
         mOutAnims = new Animation[] {mSlideOutTop, mSlideOutRight, mSlideOutBottom, mSlideOutLeft};
@@ -128,8 +141,8 @@ public class GameActivity extends AppCompatActivity {
         mTimeLimitBar.requestLayout();
 
         mPauseButton = findViewById(R.id.gamePauseButton);
+        mPauseButton.setVisibility(View.INVISIBLE);
 
-        // TODO: game pauses with no pause menu if click release is out of the view
         mPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +151,8 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+
+        getFragmentManager().beginTransaction().replace(R.id.inGameContainer, GameOptionsFragment.create(this, true)).commit();
     }
 
     @Override
@@ -160,6 +175,9 @@ public class GameActivity extends AppCompatActivity {
         super.onDestroy();
         if(mTimer != null) {
             mTimer.cancel();
+        }
+        if(mTimeAttackTimer != null) {
+            mTimeAttackTimer.cancel();
         }
     }
 
@@ -204,31 +222,43 @@ public class GameActivity extends AppCompatActivity {
 
         if(delta < 20) {
             Logutils.d(TAG, "No move");
-            mGameFlipper.setInAnimation(mFadeIn);
-            mGameFlipper.setOutAnimation(mFadeOut);
+            return;
         } else if(Math.abs(deltaX) > Math.abs(deltaY)) {
             if(deltaX > 0) {
                 Logutils.d(TAG, "Drag right");
-                mGameFlipper.setInAnimation(mSlideInLeft);
-                mGameFlipper.setOutAnimation(mSlideOutRight);
+                if(!mNoAnim && !mWackyAnim) {
+                    mGameFlipper.setOutAnimation(mSlideOutRight);
+                }
                 correctMovement = mCurrentDirection == RIGHT_ARROW;
             } else {
                 Logutils.d(TAG, "Drag left");
-                mGameFlipper.setInAnimation(mSlideInRight);
-                mGameFlipper.setOutAnimation(mSlideOutLeft);
+                if(!mNoAnim && !mWackyAnim) {
+                    mGameFlipper.setOutAnimation(mSlideOutLeft);
+                }
                 correctMovement = mCurrentDirection == LEFT_ARROW;
             }
         } else if(deltaY > 0) {
             Logutils.d(TAG, "Drag down");
-                mGameFlipper.setInAnimation(mSlideInTop);
+            if(!mNoAnim && !mWackyAnim) {
                 mGameFlipper.setOutAnimation(mSlideOutBottom);
+            }
                 correctMovement = mCurrentDirection == DOWN_ARROW;
         } else {
             Logutils.d(TAG, "Drag up");
-            mGameFlipper.setInAnimation(mSlideInBottom);
-            mGameFlipper.setOutAnimation(mSlideOutTop);
+            if(!mNoAnim && !mWackyAnim) {
+                mGameFlipper.setOutAnimation(mSlideOutTop);
+            }
             correctMovement = mCurrentDirection == UP_ARROW;
         }
+
+        if(mWackyAnim) {
+            if(Math.random() * 5 > 1) {
+                mGameFlipper.setOutAnimation(mOutAnims[(int) (Math.random() * mImageRes.length)]);
+            } else {
+                mGameFlipper.setOutAnimation(mFadeOutWacky);
+            }
+        }
+
         if(correctMovement) {
             scoreUp();
         } else {
@@ -240,6 +270,66 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    public void openAnimOptions() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.inGameContainer, GameOptionsFragment.create(this, false), "ANIM_MODE").commit();
+    }
+
+    public void closeAnimOptions() {
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("ANIM_MODE")).commit();
+        unpause();
+        if(mTimeAttackTimer != null) {
+            mTimeAttackTimer.start();
+        }
+        mGameStarted = true;
+    }
+
+    public void setTimeAttack() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        final ProgressBar bar = (ProgressBar) findViewById(R.id.timeAttackTimer);
+        ViewGroup.LayoutParams params = bar.getLayoutParams();
+        params.height = width-120;
+        params.width = height+100;
+        bar.requestLayout();
+
+        mTimeAttack = true;
+        mTimeAttackTimer = new CountDownTimer(mTimeAttackLimit, mTimeAttackLimit/100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                bar.setProgress((int) (mTimeAttackLimit - millisUntilFinished) * 100 / mTimeAttackLimit);
+            }
+
+            @Override
+            public void onFinish() {
+                endGame();
+            }
+        };
+    }
+
+    public void setEasy() {
+        mEasyAnim = true;
+    }
+
+    public void setNoAnim() {
+        mNoAnim = true;
+    }
+
+    public void setWacky() {
+        mWackyAnim = true;
+    }
+
+    public void setNoLives() {
+        mNoLives = true;
+    }
+
+    public void setTimeLimit(int limit) {
+        mTimeLimit = limit;
+    }
+
     private void resetTimer() {
         if(mTimer != null) {
             mTimer.cancel();
@@ -247,7 +337,7 @@ public class GameActivity extends AppCompatActivity {
         if(mTimeLimit > 10) {
             mTimeLimit--;
         }
-        mTimer = new CountDownTimer(mTimeLimit, 10) {
+        mTimer = new CountDownTimer(mTimeLimit, mTimeLimit/100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLimitBar.setProgress((int) (mTimeLimit - millisUntilFinished) * 100 / mTimeLimit);
@@ -270,6 +360,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void errorUp() {
+        if(mNoLives) {
+            return;
+        }
+
         ImageView image;
 
         switch(mErrorCount++) {
@@ -291,6 +385,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void endGame() {
         Fragment fragment = EndGameFragment.newInstance(mScoreCount);
+        if(mTimeAttackTimer != null) {
+            mTimeAttackTimer.cancel();
+        }
         mTimer.cancel();
         mTimer = null;
         mGameEnded = true;
@@ -313,7 +410,17 @@ public class GameActivity extends AppCompatActivity {
         image.setImageDrawable(getResources().getDrawable(mImageRes[index]));
         image.setLayoutParams(mArrowParams);
 
-        mGameFlipper.setInAnimation(mInAnims[index]);
+        if(mEasyAnim) {
+            mGameFlipper.setInAnimation(mInAnims[index]);
+        } else if(mWackyAnim) {
+            if(Math.random() * 5 > 1) {
+                mGameFlipper.setInAnimation(mInAnims[(int) (Math.random() * mImageRes.length)]);
+            } else {
+                mGameFlipper.setInAnimation(mFadeInWacky);
+            }
+        } else if(!mNoAnim) {
+            mGameFlipper.setInAnimation(mFadeIn);
+        }
 
         return image;
     }
@@ -342,8 +449,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void unpause() {
-        getFragmentManager().beginTransaction()
-                .remove(getFragmentManager().findFragmentByTag(TAG_PAUSE_FRAG)).commit();
+        Fragment frag = getFragmentManager().findFragmentByTag(TAG_PAUSE_FRAG);
+        if(frag != null) {
+            getFragmentManager().beginTransaction().remove(frag).commit();
+        }
         mGamePaused = false;
         nextImage();
         resetTimer();
@@ -366,8 +475,9 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(mGameEnded) {
+        if(!mGameStarted || mGameEnded) {
             super.onBackPressed();
+            overridePendingTransition(R.anim.fade_in_wacky, R.anim.fade_out_wacky);
         } else if(mInDialog) {
             removeDialogFragment();
         } else if(mGamePaused) {

@@ -22,6 +22,15 @@
     <string name="resume_button">Resume</string>
     <string name="ok_button">OK</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="game_mode_options">Choose a game mode</string>
+    <string name="mode_infinite">Infinite Lives</string>
+    <string name="mode_time_attack">Time Attack</string>
+    <string name="mode_normal">Normal</string>
+    <string name="mode_fast">Fast Mode</string>
+
+    <string name="anim_mode_options">Choose an animation mode</string>
+    <string name="mode_normal_anim">Normal</string>
+    <string name="mode_wacky">Wacky</string>
+    <string name="mode_easy">Easy</string>
+    <string name="mode_none">None</string>
 </resources>
