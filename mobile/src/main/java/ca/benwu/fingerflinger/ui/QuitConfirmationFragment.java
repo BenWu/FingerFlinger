@@ -39,6 +39,7 @@ public class QuitConfirmationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.fade_in_wacky, R.anim.fade_out_wacky);
             }
         });
 

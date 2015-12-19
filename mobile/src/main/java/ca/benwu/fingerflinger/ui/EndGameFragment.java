@@ -61,12 +61,20 @@ public class EndGameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.fade_in_wacky, R.anim.fade_out_wacky);
             }
         });
 
         TextView scoreTextView = ((TextView) view.findViewById(R.id.endGameScoreText));
         scoreTextView.setTypeface(font);
-        String scoreText = String.format(getResources().getString(R.string.score_text), mScore);
+
+        String scoreText;
+
+        if(mScore != 1) {
+            scoreText = String.format(getResources().getString(R.string.score_text), mScore);
+        } else {
+            scoreText = getResources().getString(R.string.score_text_single);
+        }
         scoreTextView.setText(scoreText);
 
         return view;

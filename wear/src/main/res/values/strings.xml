@@ -8,6 +8,7 @@
 
     <string name="game_over">Game Over</string>
     <string name="score_text">You scored %s points</string>
+    <string name="score_text_single">You scored 1 point</string>
 
     <string name="ok_button">OK</string>
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import ca.benwu.fingerflinger.R;
+import ca.benwu.fingerflinger.utils.AnimationQueuePlayer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,16 +71,6 @@ public class MainActivity extends AppCompatActivity {
         mEndTitle.setTypeface(Typeface.createFromAsset(getAssets(),
                 "fonts/Quicksand-Regular.otf"));
 
-        TextView startButton = ((TextView) findViewById(R.id.mainStartButton));
-        startButton.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.otf"));
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startGameIntent = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(startGameIntent);
-            }
-        });
-
         mFrontTitleSlideRight = AnimationUtils.loadAnimation(this, R.anim.front_title_slide_right);
         mFrontTitleSlideRight.setAnimationListener(new TitleAnimationListener(FRONT_RIGHT));
         mFrontTitleSlideLeft = AnimationUtils.loadAnimation(this, R.anim.front_title_slide_left);
@@ -96,6 +87,17 @@ public class MainActivity extends AppCompatActivity {
         //mArrowFlipper.setInAnimation(this, R.anim.fade_in_wacky);
         //mArrowFlipper.setOutAnimation(this, R.anim.fade_out_wacky);
         mCountDown.start();
+
+        TextView startButton = ((TextView) findViewById(R.id.mainStartButton));
+        startButton.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.otf"));
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startGameIntent = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(startGameIntent);
+                overridePendingTransition(mInAnims[0], 0);
+            }
+        });
 
         mFrontTitle.startAnimation(mFrontTitleSlideRight);
         mEndTitle.startAnimation(mEndTitleSlideRight);

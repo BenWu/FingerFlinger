@@ -66,7 +66,13 @@ public class EndGameFragment extends Fragment {
 
         TextView scoreTextView = ((TextView) view.findViewById(R.id.endGameScoreText));
         scoreTextView.setTypeface(font);
-        String scoreText = String.format(getResources().getString(R.string.score_text), mScore);
+        String scoreText;
+
+        if(mScore != 1) {
+            scoreText = String.format(getResources().getString(R.string.score_text), mScore);
+        } else {
+            scoreText = getResources().getString(R.string.score_text_single);
+        }
         scoreTextView.setText(scoreText);
 
         return view;
