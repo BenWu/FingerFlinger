@@ -1,6 +1,7 @@
 package ca.benwu.fingerflinger.ui;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,6 +28,9 @@ import ca.benwu.fingerflinger.utils.Logutils;
 public class GameActivity extends AppCompatActivity {
 
     private static final String TAG = "GameActivity";
+
+    private final String TAG_PAUSE_FRAG = "PAUSE_FRAG";
+    private final String TAG_QUIT_FRAG = "QUIT_FRAG";
 
     private int mFromX = 0;
     private int mToX = 0;
@@ -78,8 +82,6 @@ public class GameActivity extends AppCompatActivity {
     private Animation[] mOutAnims;
 
     private ProgressBar mTimeLimitBar;
-
-    private boolean mFirstMove = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -329,37 +331,37 @@ public class GameActivity extends AppCompatActivity {
         mFadeOut.setDuration(millis);
     }
 
-    private Fragment pauseFragment = new PausedFragment();
-
     private void openPauseMenu() {
         if(mTimer != null) {
             mTimer.cancel();
         }
-        getFragmentManager().beginTransaction().replace(R.id.inGameContainer, pauseFragment).commit();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.inGameContainer, new PausedFragment(), TAG_PAUSE_FRAG).commit();
         mGamePaused = true;
         mPauseButton.setVisibility(View.INVISIBLE);
     }
 
     public void unpause() {
-        getFragmentManager().beginTransaction().remove(pauseFragment).commit();
+        getFragmentManager().beginTransaction()
+                .remove(getFragmentManager().findFragmentByTag(TAG_PAUSE_FRAG)).commit();
         mGamePaused = false;
         nextImage();
         resetTimer();
         mPauseButton.setVisibility(View.VISIBLE);
     }
 
-    private Fragment quitConfirmationFragment = new QuitConfirmationFragment();
-
     public void openQuitConfirmation() {
         mInDialog = true;
-        getFragmentManager().beginTransaction().replace(R.id.inGameDialog, quitConfirmationFragment).commit();
-        getFragmentManager().beginTransaction().remove(pauseFragment).commit();
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction().replace(R.id.inGameDialog, new QuitConfirmationFragment(), TAG_QUIT_FRAG).commit();
+        fm.beginTransaction().remove(fm.findFragmentByTag(TAG_PAUSE_FRAG)).commit();
     }
 
     public void removeDialogFragment() {
         mInDialog = false;
-        getFragmentManager().beginTransaction().replace(R.id.inGameContainer, pauseFragment).commit();
-        getFragmentManager().beginTransaction().remove(quitConfirmationFragment).commit();
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction().replace(R.id.inGameContainer, new PausedFragment(), TAG_PAUSE_FRAG).commit();
+        fm.beginTransaction().remove(fm.findFragmentByTag(TAG_QUIT_FRAG)).commit();
     }
 
     @Override

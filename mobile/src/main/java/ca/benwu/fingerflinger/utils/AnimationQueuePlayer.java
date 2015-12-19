@@ -1,17 +1,14 @@
 package ca.benwu.fingerflinger.utils;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.ProgressBar;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Created by Ben Wu on 12/19/2015.
+ */
+
+/**
+ * This class can be replaced by using animation sets with offsets
  */
 public class AnimationQueuePlayer {
 
@@ -21,7 +18,7 @@ public class AnimationQueuePlayer {
 
     private Animation mFirstAnim;
 
-    public AnimationQueuePlayer(final View view, Animation... animations) {
+    public AnimationQueuePlayer(final View view, final boolean repeat, Animation... animations) {
         mView = view;
 
         mFirstAnim = animations[0];
@@ -40,7 +37,7 @@ public class AnimationQueuePlayer {
                 public void onAnimationEnd(Animation animation) {
                     if (next != null) {
                         view.startAnimation(next);
-                    } else {
+                    } else if(repeat) {
                         view.startAnimation(mFirstAnim);
                     }
                 }
@@ -51,6 +48,10 @@ public class AnimationQueuePlayer {
 
     public void playQueue() {
         mView.startAnimation(mFirstAnim);
+    }
+
+    public Animation getAnimation() {
+        return mFirstAnim;
     }
 
     private class AnimationQueue {

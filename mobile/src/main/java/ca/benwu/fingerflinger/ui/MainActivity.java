@@ -1,5 +1,6 @@
 package ca.benwu.fingerflinger.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
@@ -71,21 +72,10 @@ public class MainActivity extends AppCompatActivity {
         mEndTitle.setTypeface(Typeface.createFromAsset(getAssets(),
                 "fonts/Quicksand-Regular.otf"));
 
-        mFrontTitleSlideRight = AnimationUtils.loadAnimation(this, R.anim.front_title_slide_right);
-        mFrontTitleSlideRight.setAnimationListener(new TitleAnimationListener(FRONT_RIGHT));
-        mFrontTitleSlideLeft = AnimationUtils.loadAnimation(this, R.anim.front_title_slide_left);
-        mFrontTitleSlideLeft.setAnimationListener(new TitleAnimationListener(FRONT_LEFT));
-
-        mEndTitleSlideRight = AnimationUtils.loadAnimation(this, R.anim.end_title_slide_right);
-        mEndTitleSlideRight.setAnimationListener(new TitleAnimationListener(END_RIGHT));
-        mEndTitleSlideLeft = AnimationUtils.loadAnimation(this, R.anim.end_title_slide_left);
-        mEndTitleSlideLeft.setAnimationListener(new TitleAnimationListener(END_LEFT));
-
         mArrowFlipper = (ViewFlipper) findViewById(R.id.mainActivityAnimation);
         mArrowFlipper.setFlipInterval(ANIMATION_DURATION);
         mArrowFlipper.startFlipping();
-        //mArrowFlipper.setInAnimation(this, R.anim.fade_in_wacky);
-        //mArrowFlipper.setOutAnimation(this, R.anim.fade_out_wacky);
+
         mCountDown.start();
 
         TextView startButton = ((TextView) findViewById(R.id.mainStartButton));
@@ -94,13 +84,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent startGameIntent = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(startGameIntent);
-                overridePendingTransition(mInAnims[0], 0);
+                Bundle args = ActivityOptions
+                        .makeCustomAnimation(getApplicationContext(), R.anim.activity_zoom_in_slide_left, R.anim.activity_zoom_out_slide_left)
+                        .toBundle();
+                startActivity(startGameIntent, args);
             }
         });
 
-        mFrontTitle.startAnimation(mFrontTitleSlideRight);
-        mEndTitle.startAnimation(mEndTitleSlideRight);
+        new AnimationQueuePlayer(mFrontTitle, true,
+                AnimationUtils.loadAnimation(this, R.anim.front_title_slide_right),
+                AnimationUtils.loadAnimation(this, R.anim.front_title_slide_left)).playQueue();
+
+        new AnimationQueuePlayer(mEndTitle, true,
+                AnimationUtils.loadAnimation(this, R.anim.end_title_slide_right),
+                AnimationUtils.loadAnimation(this, R.anim.end_title_slide_left)).playQueue();
     }
 
     @Override
@@ -115,41 +112,6 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
-        }
-    }
-
-    private class TitleAnimationListener implements Animation.AnimationListener {
-
-        private int mType;
-
-        public TitleAnimationListener(int type) {
-            mType = type;
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            switch (mType) {
-                case FRONT_RIGHT:
-                    mFrontTitle.startAnimation(mFrontTitleSlideLeft);
-                    break;
-                case FRONT_LEFT:
-                    mFrontTitle.startAnimation(mFrontTitleSlideRight);
-                    break;
-                case END_RIGHT:
-                    mEndTitle.startAnimation(mEndTitleSlideLeft);
-                    break;
-                case END_LEFT:
-                    mEndTitle.startAnimation(mEndTitleSlideRight);
-                    break;
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
         }
     }
 }
