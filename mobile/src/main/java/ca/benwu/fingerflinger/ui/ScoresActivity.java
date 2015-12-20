@@ -39,10 +39,16 @@ public class ScoresActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ScoresActivity.class);
             startActivity(intent);
             finish();
-            overridePendingTransition(R.anim.activity_zoom_in_slide_left, R.anim.activity_zoom_out_slide_left);
+            overridePendingTransition(R.anim.activity_score_clear_in, R.anim.activity_score_clear_out);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade_in_wacky, R.anim.fade_out_wacky);
     }
 }

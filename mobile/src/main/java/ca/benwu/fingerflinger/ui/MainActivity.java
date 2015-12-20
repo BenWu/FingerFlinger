@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.activity_spin_in, R.anim.activity_spin_out);
             }
         });
     }
