@@ -20,6 +20,8 @@
 
         <activity android:name="ca.benwu.fingerflinger.ui.GameActivity" />
 
+        <activity android:name=".ui.ScoresActivity" />
+
     </application>
 
 </manifest>

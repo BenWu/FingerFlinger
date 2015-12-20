@@ -98,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
         new AnimationQueuePlayer(mEndTitle, true,
                 AnimationUtils.loadAnimation(this, R.anim.end_title_slide_right),
                 AnimationUtils.loadAnimation(this, R.anim.end_title_slide_left)).playQueue();
+
+        TextView scoresButton = (TextView) findViewById(R.id.mainScoresButton);
+        scoresButton.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf"));
+        scoresButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

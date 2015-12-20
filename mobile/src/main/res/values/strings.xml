@@ -5,6 +5,8 @@
     <string name="app_name_end">Flinger</string>
 
     <string name="main_start">Start</string>
+    <string name="main_scores">Scores</string>
+    <string name="main_wear">Play on watch</string>
 
     <string name="paused">Paused</string>
 

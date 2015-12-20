@@ -29,7 +29,7 @@ import ca.benwu.fingerflinger.utils.Logutils;
 /**
  * Created by Ben Wu on 12/12/2015.
  */
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment animation
 
     private static final String TAG = "GameActivity";
 
@@ -482,8 +482,7 @@ public class GameActivity extends AppCompatActivity {
         if(mTimer != null) {
             mTimer.cancel();
         }
-        getFragmentManager().beginTransaction()
-                .replace(R.id.inGameContainer, new PausedFragment(), TAG_PAUSE_FRAG).commit();
+        getFragmentManager().beginTransaction().replace(R.id.inGameContainer, new PausedFragment(), TAG_PAUSE_FRAG).commit();
         mGamePaused = true;
         mPauseButton.setVisibility(View.INVISIBLE);
     }
