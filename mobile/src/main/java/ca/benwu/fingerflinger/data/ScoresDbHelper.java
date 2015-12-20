@@ -19,10 +19,10 @@ public class ScoresDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + ScoresColumns.TABLE_NAME + " (" +
                     ScoresColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    ScoresColumns.COLUMN_POINTS + " TEXT," +
+                    ScoresColumns.COLUMN_POINTS + " INTEGER," +
                     ScoresColumns.COLUMN_GAME_MODE + " TEXT," +
-                    ScoresColumns.COLUMN_ANIMATION_MODE + " TEXT" +
-                    ScoresColumns.COLUMN_PLATFORM + " TEXT" +
+                    ScoresColumns.COLUMN_ANIMATION_MODE + " TEXT," +
+                    ScoresColumns.COLUMN_PLATFORM + " TEXT," +
                     ScoresColumns.COLUMN_DATE + " TEXT" +
                     " )";
 
@@ -49,7 +49,7 @@ public class ScoresDbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public long insert(String points, String gameMode,
+    public long insert(int points, String gameMode,
                        String animationMode, String platform, String date) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -59,7 +59,6 @@ public class ScoresDbHelper extends SQLiteOpenHelper {
         values.put(ScoresColumns.COLUMN_ANIMATION_MODE, animationMode);
         values.put(ScoresColumns.COLUMN_PLATFORM, platform);
         values.put(ScoresColumns.COLUMN_DATE, date);
-
         return db.insert(ScoresColumns.TABLE_NAME, "null", values);
     }
 

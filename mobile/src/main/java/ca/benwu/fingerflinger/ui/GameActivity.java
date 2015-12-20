@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import ca.benwu.fingerflinger.R;
+import static ca.benwu.fingerflinger.data.ScoresContract.ScoresColumns;
+
+import ca.benwu.fingerflinger.data.ScoresDbHelper;
+import ca.benwu.fingerflinger.utils.DateUtils;
 import ca.benwu.fingerflinger.utils.Logutils;
 
 /**
@@ -63,11 +67,12 @@ public class GameActivity extends AppCompatActivity {
 
     private int mTimeLimit = 1000;
     private CountDownTimer mTimer;
-    private boolean mNoLives = false;
-    private boolean mTimeAttack = false;
     private int mTimeAttackLimit = 60000;
     private CountDownTimer mTimeAttackTimer;
 
+    private boolean mNoLives = false;
+    private boolean mTimeAttack = false;
+    private boolean mFastMode = false;
     private boolean mWackyAnim = false;
     private boolean mEasyAnim = false;
     private boolean mNoAnim = false;
@@ -284,6 +289,11 @@ public class GameActivity extends AppCompatActivity {
         mGameStarted = true;
     }
 
+    public void setFastMode() {
+        mTimeLimit = 600;
+        mFastMode = true;
+    }
+
     public void setTimeAttack() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -393,6 +403,36 @@ public class GameActivity extends AppCompatActivity {
         mGameEnded = true;
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, fragment).commit();
         mPauseButton.setVisibility(View.INVISIBLE);
+
+        insertScore();
+    }
+
+    private void insertScore() {
+        String gameMode;
+        String animMode;
+        String date = DateUtils.getDateStringFromMilliseconds(System.currentTimeMillis(), "dd/MM/yyyy");
+
+        if(mNoLives) {
+            return;
+        } else if(mTimeAttack) {
+            gameMode = ScoresColumns.GAME_MODE_TIME;
+        } else if(mFastMode) {
+            gameMode = ScoresColumns.GAME_MODE_FAST;
+        } else {
+            gameMode = ScoresColumns.GAME_MODE_NORMAL;
+        }
+
+        if(mEasyAnim) {
+            animMode = ScoresColumns.ANIM_MODE_EASY;
+        } else if(mWackyAnim) {
+            animMode = ScoresColumns.ANIM_MODE_WACKY;
+        } else if(mNoAnim) {
+            animMode = ScoresColumns.ANIM_MODE_NONE;
+        } else {
+            animMode = ScoresColumns.ANIM_MODE_NORMAL;
+        }
+
+        new ScoresDbHelper(this).insert(mScoreCount, gameMode, animMode, ScoresColumns.PLATFORM_MOBILE, date);
     }
 
     private void nextImage() {

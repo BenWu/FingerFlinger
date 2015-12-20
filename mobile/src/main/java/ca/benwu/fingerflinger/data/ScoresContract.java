@@ -13,7 +13,7 @@ public class ScoresContract {
         public static final String COLUMN_POINTS = "Points";
         public static final String COLUMN_GAME_MODE = "GameMode";
         public static final String COLUMN_ANIMATION_MODE = "AnimMode";
-        public static final String COLUMN_PLATFORM = "Platform"; // mobile or wearable
+        public static final String COLUMN_PLATFORM = "Platform";
         public static final String COLUMN_DATE = "TimeStamp";
 
         public static final String[] PROJ = {_ID, COLUMN_POINTS, COLUMN_GAME_MODE,
@@ -29,6 +29,10 @@ public class ScoresContract {
         public static final String ANIM_MODE_WACKY = "Wacky";
         public static final String ANIM_MODE_EASY = "Easy";
         public static final String ANIM_MODE_NONE = "None";
+
+        // platforms
+        public static final String PLATFORM_MOBILE = "Mobile";
+        public static final String PLATFORM_WEARABLE = "Wearable";
 
         public static final String FOR_GAME_MODE_AND_PLATFORM
                 = COLUMN_GAME_MODE + " =? AND " + COLUMN_PLATFORM + " =?";

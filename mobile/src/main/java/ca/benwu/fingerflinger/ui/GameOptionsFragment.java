@@ -71,7 +71,7 @@ public class GameOptionsFragment extends Fragment {
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.setTimeLimit(600);
+                    mActivity.setFastMode();
                     mActivity.openAnimOptions();
                 }
             });
