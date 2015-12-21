@@ -9,6 +9,8 @@ import java.util.Locale;
  */
 public class DateUtils {
 
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
+
     public static String getDateStringFromMilliseconds(long dateMilliseconds, String outputFormat) {
         try {
             Date date = new Date(dateMilliseconds);

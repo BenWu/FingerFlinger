@@ -29,7 +29,7 @@ public class ScoresFragment extends Fragment {
 
     private ViewPager mViewPager;
 
-    private String[] mTabTitles = {"Normal", "Fast", "Time Attack"};
+    private String[] mTabTitles = {"Normal", "Fast", "Time Attack", "On Watch"};
     private String[] mModeColumns = {ScoresColumns.GAME_MODE_NORMAL,
             ScoresColumns.GAME_MODE_FAST, ScoresColumns.GAME_MODE_TIME};
 
@@ -72,10 +72,18 @@ public class ScoresFragment extends Fragment {
 
             View view = getActivity().getLayoutInflater().inflate(R.layout.score_page, container, false);
 
-            // lots of problems with running query in background thread, query should be fast anyway
-            Cursor c = new ScoresDbHelper(getActivity())
-                    .query(ScoresColumns.FOR_GAME_MODE_AND_PLATFORM,
-                            new String[]{mModeColumns[position], "Mobile"});
+            Cursor c;
+
+            if(position == 3) {
+                c = new ScoresDbHelper(getActivity())
+                        .query(ScoresColumns.FOR_GAME_MODE_AND_PLATFORM,
+                                new String[]{mModeColumns[0], ScoresColumns.PLATFORM_WEARABLE});
+            } else {
+                // lots of problems with running query in background thread, query should be fast anyway
+                c = new ScoresDbHelper(getActivity())
+                        .query(ScoresColumns.FOR_GAME_MODE_AND_PLATFORM,
+                                new String[]{mModeColumns[position], ScoresColumns.PLATFORM_MOBILE});
+            }
 
             if(c.getCount() == 0) {
                 TextView noScoreText = (TextView) view.findViewById(R.id.noScoresText);

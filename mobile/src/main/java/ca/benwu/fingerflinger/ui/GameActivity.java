@@ -410,7 +410,7 @@ public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment 
     private void insertScore() {
         String gameMode;
         String animMode;
-        String date = DateUtils.getDateStringFromMilliseconds(System.currentTimeMillis(), "dd/MM/yyyy");
+        String date = DateUtils.getDateStringFromMilliseconds(System.currentTimeMillis(), DateUtils.DATE_FORMAT);
 
         if(mNoLives) {
             return;

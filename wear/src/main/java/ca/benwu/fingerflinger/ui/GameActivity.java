@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.MotionEventCompat;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -17,6 +18,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
+import com.google.android.gms.wearable.Wearable;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
+
 import ca.benwu.fingerflinger.R;
 import ca.benwu.fingerflinger.utils.Logutils;
 
@@ -26,6 +40,8 @@ import ca.benwu.fingerflinger.utils.Logutils;
 public class GameActivity extends Activity {
 
     private static final String TAG = "GameActivity";
+
+    public static final String PATH_RESULTS = "/WEAR_RESULTS";
 
     private int mFromX = 0;
     private int mToX = 0;
@@ -78,9 +94,15 @@ public class GameActivity extends Activity {
 
     private boolean mFirstMove = true;
 
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API).build();
+        mGoogleApiClient.connect();
 
         Logutils.d(TAG, "OnCreate");
 
@@ -268,6 +290,11 @@ public class GameActivity extends Activity {
         mGameEnded = true;
         Fragment fragment = EndGameFragment.newInstance(mScoreCount);
         getFragmentManager().beginTransaction().replace(R.id.inGameDialog, fragment).commit();
+
+        PutDataMapRequest putDataMapReq = PutDataMapRequest.create(PATH_RESULTS).setUrgent();
+        putDataMapReq.getDataMap().putInt("score", mScoreCount);
+        PutDataRequest putDataRequest = putDataMapReq.asPutDataRequest();
+        Wearable.DataApi.putDataItem(mGoogleApiClient, putDataRequest);
     }
 
     private void nextImage() {
