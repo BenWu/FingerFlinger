@@ -3,36 +3,40 @@ package ca.benwu.fingerflinger.ui;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.CapabilityApi;
+import com.google.android.gms.wearable.CapabilityInfo;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.Wearable;
+
+import java.util.Set;
 
 import ca.benwu.fingerflinger.R;
 import ca.benwu.fingerflinger.utils.AnimationQueuePlayer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
 
     private ViewFlipper mArrowFlipper;
 
     private TextView mFrontTitle;
     private TextView mEndTitle;
 
-    private Animation mFrontTitleSlideRight;
-    private Animation mFrontTitleSlideLeft;
-    private Animation mEndTitleSlideRight;
-    private Animation mEndTitleSlideLeft;
+    private GoogleApiClient mGoogleApiClient;
 
-    // to animation listener constructor
-    private final int FRONT_RIGHT = 1;
-    private final int FRONT_LEFT = 2;
-    private final int END_RIGHT = 3;
-    private final int END_LEFT = 4;
+    private static final String PATH_START_ON_WATCH = "/gameOnWatch";
 
     private final int ANIMATION_DURATION = 1000; // in ms
 
@@ -57,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
             mCountDown.start();
         }
     };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        new GetNodesTask().execute();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.activity_spin_in, R.anim.activity_spin_out);
             }
         });
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .build();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -123,6 +143,39 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
+        }
+    }
+
+    private class GetNodesTask extends AsyncTask<Void, Void, Set<Node>> {
+        @Override
+        protected Set<Node> doInBackground(Void... params) {
+            CapabilityApi.GetCapabilityResult result = Wearable.CapabilityApi.getCapability(
+                    mGoogleApiClient, "i_am_a_watch", CapabilityApi.FILTER_REACHABLE).await();
+
+            return result.getCapability().getNodes();
+        }
+
+        @Override
+        protected void onPostExecute(final Set<Node> nodes) {
+            if(nodes.isEmpty()) {
+                return;
+            }
+
+            TextView button = (TextView) findViewById(R.id.mainWearButton);
+            button.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf"));
+            button.setVisibility(View.VISIBLE);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for(Node node : nodes) {
+                        if(node.isNearby()) {
+                            Wearable.MessageApi
+                                    .sendMessage(mGoogleApiClient, node.getId(), PATH_START_ON_WATCH, new byte[0]);
+                        }
+                        Toast.makeText(getApplicationContext(), "Game started on watch", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 }

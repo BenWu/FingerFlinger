@@ -23,6 +23,12 @@
         <activity android:name=".ui.GameActivity"
             android:theme="@style/NoSwipeToDismiss"/>
 
+        <service android:name=".service.ListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
