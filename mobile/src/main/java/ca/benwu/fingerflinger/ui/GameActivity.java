@@ -402,6 +402,7 @@ public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment 
         mTimer = null;
         mGameEnded = true;
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, fragment).commit();
+        findViewById(R.id.inGameContainer).startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_from_top));
         mPauseButton.setVisibility(View.INVISIBLE);
 
         insertScore();
@@ -483,6 +484,7 @@ public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment 
             mTimer.cancel();
         }
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, new PausedFragment(), TAG_PAUSE_FRAG).commit();
+        findViewById(R.id.inGameContainer).startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_from_top));
         mGamePaused = true;
         mPauseButton.setVisibility(View.INVISIBLE);
     }
@@ -503,6 +505,7 @@ public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment 
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.inGameDialog, new QuitConfirmationFragment(), TAG_QUIT_FRAG).commit();
         fm.beginTransaction().remove(fm.findFragmentByTag(TAG_PAUSE_FRAG)).commit();
+        findViewById(R.id.inGameDialog).startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in_normal));
     }
 
     public void removeDialogFragment() {
