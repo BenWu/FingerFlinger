@@ -31,7 +31,7 @@
         style="@android:style/Widget.Holo.ProgressBar.Horizontal"/>
 
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomBoldTextView
         android:id="@+id/scoreCount"
         android:paddingTop="15dp"
         android:gravity="center"

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_floating_box">
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomBoldTextView
         android:id="@+id/gameOver"
         android:text="@string/game_over"
         android:padding="10dp"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomRegularTextView
         android:id="@+id/endGameScoreText"
         android:padding="10dp"
         android:textSize="20sp"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomRegularTextView
         android:id="@+id/endGameButton"
         android:layout_gravity="center"
         android:paddingTop="20dp"
@@ -31,6 +31,7 @@
         android:paddingEnd="40dp"
         android:paddingStart="40dp"
         android:layout_margin="10dp"
+        android:textSize="18sp"
         android:text="@string/ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

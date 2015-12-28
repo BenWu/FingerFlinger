@@ -81,10 +81,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mFrontTitle = (TextView) findViewById(R.id.mainTitle1);
         mEndTitle = (TextView) findViewById(R.id.mainTitle2);
 
-        mFrontTitle.setTypeface(Typeface.createFromAsset(getAssets(),
-                "fonts/Quicksand-Bold.otf"));
-        mEndTitle.setTypeface(Typeface.createFromAsset(getAssets(),
-                "fonts/Quicksand-Regular.otf"));
 
         mArrowFlipper = (ViewFlipper) findViewById(R.id.mainActivityAnimation);
         mArrowFlipper.setFlipInterval(ANIMATION_DURATION);
@@ -93,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mCountDown.start();
 
         TextView startButton = ((TextView) findViewById(R.id.mainStartButton));
-        startButton.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.otf"));
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 AnimationUtils.loadAnimation(this, R.anim.end_title_slide_left)).playQueue();
 
         TextView scoresButton = (TextView) findViewById(R.id.mainScoresButton);
-        scoresButton.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf"));
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
 
             TextView button = (TextView) findViewById(R.id.mainWearButton);
-            button.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf"));
             button.setVisibility(View.VISIBLE);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

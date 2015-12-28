@@ -28,13 +28,7 @@ public class QuitConfirmationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quit_confirmation, container, false);
 
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Regular.otf");
-        Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
-
-        ((TextView) view.findViewById(R.id.areYouSure)).setTypeface(fontBold);
-
         TextView yesButt = ((TextView) view.findViewById(R.id.yesButton));
-        yesButt.setTypeface(font);
         yesButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +38,6 @@ public class QuitConfirmationFragment extends Fragment {
         });
 
         TextView noButt = ((TextView) view.findViewById(R.id.noButton));
-        noButt.setTypeface(font);
         noButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

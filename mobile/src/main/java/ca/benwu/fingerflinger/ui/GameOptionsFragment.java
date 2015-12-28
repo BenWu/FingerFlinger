@@ -55,12 +55,6 @@ public class GameOptionsFragment extends Fragment {
         button3.setText(isGameMode ? R.string.mode_time_attack : R.string.mode_easy);
         button4.setText(isGameMode ? R.string.mode_infinite : R.string.mode_none);
 
-        title.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/Quicksand-Bold.otf"));
-        button1.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/Quicksand-Regular.otf"));
-        button2.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/Quicksand-Regular.otf"));
-        button3.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/Quicksand-Regular.otf"));
-        button4.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/Quicksand-Regular.otf"));
-
         if(isGameMode) {
             button1.setOnClickListener(new View.OnClickListener() {
                 @Override

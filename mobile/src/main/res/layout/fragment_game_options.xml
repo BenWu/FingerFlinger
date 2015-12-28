@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@drawable/bg_floating_box">
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomBoldTextView
         android:id="@+id/optionsTitle"
         android:padding="10dp"
         android:textSize="30sp"
@@ -20,26 +20,22 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp">
 
-        <TextView
+        <ca.benwu.fingerflinger.view.CustomRegularTextView
             android:id="@+id/optionButton1"
             android:layout_gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
+            android:padding="12dp"
             android:layout_margin="5dp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_main_buttons" />
 
-        <TextView
+        <ca.benwu.fingerflinger.view.CustomRegularTextView
             android:id="@+id/optionButton2"
             android:layout_gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
+            android:padding="12dp"
             android:layout_margin="5dp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_main_buttons"/>
@@ -51,26 +47,22 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <TextView
+        <ca.benwu.fingerflinger.view.CustomRegularTextView
             android:id="@+id/optionButton3"
             android:layout_gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
+            android:padding="12dp"
             android:layout_margin="5dp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_main_buttons"/>
 
-        <TextView
+        <ca.benwu.fingerflinger.view.CustomRegularTextView
             android:id="@+id/optionButton4"
             android:layout_gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
+            android:padding="12dp"
             android:layout_margin="5dp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_main_buttons"/>

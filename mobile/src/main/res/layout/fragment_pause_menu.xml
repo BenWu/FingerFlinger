@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_floating_box">
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomBoldTextView
         android:id="@+id/pauseMenuText"
         android:text="@string/paused"
         android:padding="10dp"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomRegularTextView
         android:id="@+id/quitButton"
         android:layout_gravity="center"
         android:paddingTop="20dp"
@@ -23,13 +23,14 @@
         android:paddingStart="40dp"
         android:layout_margin="10dp"
         android:text="@string/quit_button"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_main_buttons"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomRegularTextView
         android:id="@+id/resumeButton"
         android:layout_gravity="center"
         android:paddingTop="20dp"
@@ -38,6 +39,7 @@
         android:paddingStart="40dp"
         android:layout_margin="10dp"
         android:text="@string/resume_button"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_main_buttons"

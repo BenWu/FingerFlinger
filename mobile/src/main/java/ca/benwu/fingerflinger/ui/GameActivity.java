@@ -29,7 +29,7 @@ import ca.benwu.fingerflinger.utils.Logutils;
 /**
  * Created by Ben Wu on 12/12/2015.
  */
-public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment animation
+public class GameActivity extends AppCompatActivity {
 
     private static final String TAG = "GameActivity";
 
@@ -111,7 +111,6 @@ public class GameActivity extends AppCompatActivity { // TODO: sounds, fragment 
         mArrowParams = findViewById(R.id.templateArrow).getLayoutParams();
 
         mScoreBox = (TextView) findViewById(R.id.scoreCount);
-        mScoreBox.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.otf"));
         mScoreBox.setText("0");
 
         mSlideInTop = AnimationUtils.loadAnimation(this, R.anim.slide_in_from_top);

@@ -29,13 +29,7 @@ public class PausedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pause_menu, container, false);
 
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Regular.otf");
-        Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
-
-        ((TextView) view.findViewById(R.id.pauseMenuText)).setTypeface(fontBold);
-
         TextView quitButt = ((TextView) view.findViewById(R.id.quitButton));
-        quitButt.setTypeface(font);
         quitButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +38,6 @@ public class PausedFragment extends Fragment {
         });
 
         TextView resumeButt = ((TextView) view.findViewById(R.id.resumeButton));
-        resumeButt.setTypeface(font);
         resumeButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

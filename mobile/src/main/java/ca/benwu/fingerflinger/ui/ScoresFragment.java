@@ -87,7 +87,6 @@ public class ScoresFragment extends Fragment {
 
             if(c.getCount() == 0) {
                 TextView noScoreText = (TextView) view.findViewById(R.id.noScoresText);
-                noScoreText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf"));
                 noScoreText.setVisibility(View.VISIBLE);
             } else {
                 ListView scoreList = (ListView) view.findViewById(R.id.scoresList);

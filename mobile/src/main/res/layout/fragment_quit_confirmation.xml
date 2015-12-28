@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_dialog_box">
 
-    <TextView
+    <ca.benwu.fingerflinger.view.CustomBoldTextView
         android:id="@+id/areYouSure"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <TextView
+        <ca.benwu.fingerflinger.view.CustomRegularTextView
             android:id="@+id/yesButton"
             android:textSize="20sp"
             android:text="@string/yes"
@@ -35,7 +35,7 @@
             android:layout_width="30dp"
             android:layout_height="0dp" />
 
-        <TextView
+        <ca.benwu.fingerflinger.view.CustomRegularTextView
             android:id="@+id/noButton"
             android:textSize="20sp"
             android:text="@string/no"
