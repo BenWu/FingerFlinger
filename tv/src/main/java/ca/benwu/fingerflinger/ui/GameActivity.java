@@ -22,6 +22,7 @@ import android.widget.ViewFlipper;
 
 import ca.benwu.fingerflinger.R;
 //import ca.benwu.fingerflinger.data.ScoresDbHelper;
+import ca.benwu.fingerflinger.data.GameMode;
 import ca.benwu.fingerflinger.utils.DateUtils;
 import ca.benwu.fingerflinger.utils.Logutils;
 
@@ -36,6 +37,14 @@ public class GameActivity extends Activity {
 
     private final String TAG_PAUSE_FRAG = "PAUSE_FRAG";
     private final String TAG_QUIT_FRAG = "QUIT_FRAG";
+
+    public static final String KEY_GAME_MODE = "KEY_GAME_MODE";
+    public static final String KEY_ANIM_MODE = "KEY_ANIM_MODE";
+
+    public static final int ANIM_NORMAL = 0;
+    public static final int ANIM_WACKY = 1;
+    public static final int ANIM_EASY = 2;
+    public static final int ANIM_NONE = 3;
 
     private ViewFlipper mGameFlipper;
 
@@ -137,6 +146,34 @@ public class GameActivity extends Activity {
         params.height = width;
         params.width = height+100;
         mTimeLimitBar.requestLayout();
+
+        switch(getIntent().getIntExtra(KEY_GAME_MODE, 0)) {
+            case GameMode.MODE_NORMAL:
+                break;
+            case GameMode.MODE_FAST:
+                setFastMode();
+                break;
+            case GameMode.MODE_TIME_ATTACK:
+                setTimeAttack();
+                break;
+            case GameMode.MODE_INFINITE:
+                setNoLives();
+                break;
+        }
+
+        switch(getIntent().getIntExtra(KEY_ANIM_MODE, 0)) {
+            case ANIM_NORMAL:
+                break;
+            case ANIM_WACKY:
+                setWacky();
+                break;
+            case ANIM_EASY:
+                setEasy();
+                break;
+            case ANIM_NONE:
+                setNoAnim();
+                break;
+        }
     }
 
     @Override

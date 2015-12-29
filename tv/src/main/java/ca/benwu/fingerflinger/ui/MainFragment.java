@@ -16,7 +16,9 @@ package ca.benwu.fingerflinger.ui;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,6 +58,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import ca.benwu.fingerflinger.R;
 import ca.benwu.fingerflinger.data.GameMode;
 import ca.benwu.fingerflinger.presenter.GameModePresenter;
+import ca.benwu.fingerflinger.utils.Logutils;
 
 public class MainFragment extends BrowseFragment {
     private static final String TAG = "MainFragment";
@@ -69,6 +72,12 @@ public class MainFragment extends BrowseFragment {
     private BackgroundManager mBackgroundManager;
 
     private View mSelectedMode;
+
+    public static final ArrayList<String> ANIM_MODES = new ArrayList<>(Arrays.asList("Normal", "Wacky", "Easy", "None"));
+
+    private int mSelectedAnim = 0;
+
+    private View mSelectedAnimView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -92,14 +101,20 @@ public class MainFragment extends BrowseFragment {
     private void loadRows() {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
-        ArrayObjectAdapter modeAdapter = new ArrayObjectAdapter(new GameModePresenter());
+        ArrayObjectAdapter gameModeAdapter = new ArrayObjectAdapter(new GameModePresenter());
 
-        modeAdapter.add(new GameMode(getActivity(), GameMode.MODE_NORMAL));
-        modeAdapter.add(new GameMode(getActivity(), GameMode.MODE_FAST));
-        modeAdapter.add(new GameMode(getActivity(), GameMode.MODE_TIME_ATTACK));
-        modeAdapter.add(new GameMode(getActivity(), GameMode.MODE_INFINITE));
+        gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_NORMAL));
+        gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_FAST));
+        gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_TIME_ATTACK));
+        gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_INFINITE));
 
-        mRowsAdapter.add(new ListRow(new HeaderItem("Game Modes"), modeAdapter));
+        mRowsAdapter.add(new ListRow(new HeaderItem("Game Modes"), gameModeAdapter));
+
+        ArrayObjectAdapter animModeAdapter = new ArrayObjectAdapter(new GridItemPresenter());
+
+        animModeAdapter.addAll(0, ANIM_MODES);
+
+        mRowsAdapter.add(new ListRow(new HeaderItem("Animation Modes"), animModeAdapter));
 
         setAdapter(mRowsAdapter);
     }
@@ -136,9 +151,16 @@ public class MainFragment extends BrowseFragment {
                         R.anim.activity_slide_in_from_left,
                         R.anim.activity_slide_out_to_right).toBundle();
 
+                intent.putExtra(GameActivity.KEY_GAME_MODE, ((GameMode) item).getMode());
+                intent.putExtra(GameActivity.KEY_ANIM_MODE, mSelectedAnim);
+
                 startActivity(intent, options);
             } else if (item instanceof String) {
-
+                mSelectedAnimView.setBackgroundColor(getResources().getColor(R.color.default_background));
+                mSelectedAnimView = itemViewHolder.view;
+                mSelectedAnimView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mSelectedAnim = ANIM_MODES.indexOf(item);
+                Logutils.d(TAG, "Selected anim mode: " + mSelectedAnim);
             }
         }
     }
@@ -167,6 +189,11 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, Object item) {
             ((TextView) viewHolder.view).setText((String) item);
+            if(item.equals(ANIM_MODES.get(0))) {
+                viewHolder.view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mSelectedAnimView = viewHolder.view;
+                mSelectedAnim = 0;
+            }
         }
 
         @Override
@@ -175,3 +202,4 @@ public class MainFragment extends BrowseFragment {
     }
 
 }
+
