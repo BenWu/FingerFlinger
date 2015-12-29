@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.benwu.fingerflinger">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -19,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Leanback">
         <activity
-            android:name="ca.benwu.fingerflinger.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/app_name"
@@ -31,9 +28,6 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ca.benwu.fingerflinger.DetailsActivity" />
-        <activity android:name="ca.benwu.fingerflinger.PlaybackOverlayActivity" />
-        <activity android:name="ca.benwu.fingerflinger.BrowseErrorActivity" />
     </application>
 
 </manifest>

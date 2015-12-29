@@ -1,4 +1,31 @@
 <resources>
+    <color name="colorPrimary">#0099cc</color>
+    <color name="colorPrimaryDark">#01579b</color>
+    <color name="colorAccent">#00d0ff</color>
+
+    <color name="defaultText">#373560</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="backgroundDefault">#0099cc</color>
+
+    <color name="progressBarBlue">#00d0ff</color>
+    <color name="progressBarDarkBlue">#01579b</color>
+
+    <color name="white80">#dbeeeeee</color>
+
+    <color name="grey">#afafaf</color>
+    <color name="grey20">#6eafafaf</color>
+    <color name="grey40">#a5afafaf</color>
+    <color name="grey60">#c8afafaf</color>
+    <color name="grey80">#e7afafaf</color>
+
+    <color name="red60">#a5da0101</color>
+    <color name="red80">#d1da0101</color>
+
+    <color name="green60">#a517ac00</color>
+    <color name="green80">#d117ac00</color>
+
     <color name="background_gradient_start">#000000</color>
     <color name="background_gradient_end">#DDDDDD</color>
     <color name="fastlane_background">#0096a6</color>
