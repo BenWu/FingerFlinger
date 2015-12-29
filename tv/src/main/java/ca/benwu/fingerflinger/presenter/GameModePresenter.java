@@ -15,7 +15,7 @@ import ca.benwu.fingerflinger.data.GameMode;
 public class GameModePresenter extends Presenter {
 
     protected int IMAGE_WIDTH = 500;
-    protected static int IMAGE_HEIGHT = 250;
+    protected static int IMAGE_HEIGHT = 220;
 
     private static int sSelectedBackgroundColor;
     private static int sDefaultBackgroundColor;
@@ -42,10 +42,10 @@ public class GameModePresenter extends Presenter {
 
     private static void updateCardBackgroundColor(ImageCardView view, boolean selected) {
         int bgColor = selected ? sSelectedBackgroundColor : sDefaultBackgroundColor;
-        int infoColor = selected ? sDefaultBackgroundColor : sSelectedBackgroundColor;
+        //int infoColor = selected ? sDefaultBackgroundColor : sSelectedBackgroundColor;
 
         view.setBackgroundColor(bgColor);
-        view.setInfoAreaBackgroundColor(infoColor);
+        view.setInfoAreaBackgroundColor(sSelectedBackgroundColor);
     }
 
     @Override

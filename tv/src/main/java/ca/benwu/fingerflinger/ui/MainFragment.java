@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -120,7 +121,7 @@ public class MainFragment extends BrowseFragment {
 
     private void setupEventListeners() {
         setOnItemViewClickedListener(new ItemViewClickedListener());
-        setOnItemViewSelectedListener(new ItemViewSelectedListener());
+        //setOnItemViewSelectedListener(new ItemViewSelectedListener());
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
@@ -129,7 +130,13 @@ public class MainFragment extends BrowseFragment {
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
             if (item instanceof GameMode) {
+                Intent intent = new Intent(getActivity(), GameActivity.class);
 
+                Bundle options = ActivityOptions.makeCustomAnimation(getActivity(),
+                        R.anim.activity_slide_in_from_left,
+                        R.anim.activity_slide_out_to_right).toBundle();
+
+                startActivity(intent, options);
             } else if (item instanceof String) {
 
             }
@@ -140,10 +147,6 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
-
-            if (item instanceof GameMode) {
-
-            }
 
         }
     }

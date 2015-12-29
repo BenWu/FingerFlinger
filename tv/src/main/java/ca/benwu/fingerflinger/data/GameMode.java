@@ -29,20 +29,20 @@ public class GameMode {
 
         switch(mode) {
             case MODE_NORMAL:
-                mAnim = AnimationUtils.loadAnimation(context, R.anim.slide_out_to_right);
-                mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.slide_in_from_left);
+                mAnim = AnimationUtils.loadAnimation(context, R.anim.card_slide_out_to_right);
+                mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.card_slide_in_from_left);
                 break;
             case MODE_FAST:
-                mAnim = AnimationUtils.loadAnimation(context, R.anim.slide_out_to_right_fast);
-                mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.slide_in_from_left_fast);
+                mAnim = AnimationUtils.loadAnimation(context, R.anim.card_slide_out_to_right_fast);
+                mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.card_slide_in_from_left_fast);
                 break;
             case MODE_TIME_ATTACK:
                 mAnim = AnimationUtils.loadAnimation(context, R.anim.rotation);
                 mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.rotation);
                 break;
             case MODE_INFINITE:
-                mAnim = AnimationUtils.loadAnimation(context, R.anim.slide_out_to_right_slow);
-                mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.slide_in_from_left_slow);
+                mAnim = AnimationUtils.loadAnimation(context, R.anim.card_slide_out_to_right_slow);
+                mSecondAnim = AnimationUtils.loadAnimation(context, R.anim.card_slide_in_from_left_slow);
                 break;
         }
 
@@ -59,5 +59,9 @@ public class GameMode {
 
     public String getModeName() {
         return mModeName;
+    }
+
+    public int getMode() {
+        return mMode;
     }
 }
