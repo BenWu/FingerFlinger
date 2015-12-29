@@ -5,12 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -21,12 +17,12 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import ca.benwu.fingerflinger.R;
-//import ca.benwu.fingerflinger.data.ScoresDbHelper;
 import ca.benwu.fingerflinger.data.GameMode;
+import ca.benwu.fingerflinger.data.ScoresDbHelper;
 import ca.benwu.fingerflinger.utils.DateUtils;
 import ca.benwu.fingerflinger.utils.Logutils;
 
-//import static ca.benwu.fingerflinger.data.ScoresContract.ScoresColumns;
+import static ca.benwu.fingerflinger.data.ScoresContract.ScoresColumns;
 
 /**
  * Created by Ben Wu on 12/12/2015.
@@ -369,7 +365,7 @@ public class GameActivity extends Activity {
     }
 
     private void insertScore() {
-        /*String gameMode;
+        String gameMode;
         String animMode;
         String date = DateUtils.getDateStringFromMilliseconds(System.currentTimeMillis(), DateUtils.DATE_FORMAT);
 
@@ -393,7 +389,7 @@ public class GameActivity extends Activity {
             animMode = ScoresColumns.ANIM_MODE_NORMAL;
         }
 
-        new ScoresDbHelper(this).insert(mScoreCount, gameMode, animMode, ScoresColumns.PLATFORM_MOBILE, date);*/
+        new ScoresDbHelper(this).insert(mScoreCount, gameMode, animMode, date);
     }
 
     private void nextImage() {

@@ -71,8 +71,6 @@ public class MainFragment extends BrowseFragment {
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
 
-    private View mSelectedMode;
-
     public static final ArrayList<String> ANIM_MODES = new ArrayList<>(Arrays.asList("Normal", "Wacky", "Easy", "None"));
 
     private int mSelectedAnim = 0;
