@@ -20,11 +20,15 @@
     <color name="grey60">#c8afafaf</color>
     <color name="grey80">#e7afafaf</color>
 
+    <color name="red40">#67da0101</color>
     <color name="red60">#a5da0101</color>
     <color name="red80">#d1da0101</color>
+    <color name="red">#da0101</color>
 
+    <color name="green40">#6717ac00</color>
     <color name="green60">#a517ac00</color>
     <color name="green80">#d117ac00</color>
+    <color name="green">#17ac00</color>
 
     <color name="background_gradient_start">#000000</color>
     <color name="background_gradient_end">#DDDDDD</color>

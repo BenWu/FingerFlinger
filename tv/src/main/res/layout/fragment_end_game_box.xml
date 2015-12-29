@@ -37,6 +37,11 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_main_buttons"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:focusable="true" >
+
+        <requestFocus/>
+
+    </ca.benwu.fingerflinger.view.CustomRegularTextView>
 
 </RelativeLayout>

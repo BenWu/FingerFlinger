@@ -29,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:background="@drawable/bg_green_button"/>
+            android:background="@drawable/bg_green_button"
+            android:focusable="true" />
 
         <View
             android:layout_width="30dp"
@@ -42,7 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:background="@drawable/bg_red_button"/>
+            android:background="@drawable/bg_red_button"
+            android:focusable="true" >
+
+            <requestFocus/>
+
+        </ca.benwu.fingerflinger.view.CustomRegularTextView>
 
     </LinearLayout>
 

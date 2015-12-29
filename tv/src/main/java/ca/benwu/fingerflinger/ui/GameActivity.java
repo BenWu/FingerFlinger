@@ -37,11 +37,6 @@ public class GameActivity extends Activity {
     private final String TAG_PAUSE_FRAG = "PAUSE_FRAG";
     private final String TAG_QUIT_FRAG = "QUIT_FRAG";
 
-    private int mFromX = 0;
-    private int mToX = 0;
-    private int mFromY = 0;
-    private int mToY = 0;
-
     private ViewFlipper mGameFlipper;
 
     private ViewGroup.LayoutParams mArrowParams;
@@ -157,7 +152,14 @@ public class GameActivity extends Activity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        boolean correctMovement = false;
+        boolean correctMovement;
+
+        if(mGameStarted && (mGameEnded || mGamePaused)){
+            return super.onKeyUp(keyCode, event);
+        }
+
+        mGameStarted = true;
+        mGamePaused = false;
 
         if(keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             Logutils.d(TAG, "Click up");
@@ -183,6 +185,11 @@ public class GameActivity extends Activity {
                 mGameFlipper.setOutAnimation(mSlideOutLeft);
             }
             correctMovement = mCurrentDirection == LEFT_ARROW;
+        } else if(keyCode == KeyEvent.KEYCODE_BACK) {
+            openPauseMenu();
+            return true;
+        } else {
+            return super.onKeyUp(keyCode, event);
         }
 
         if(mWackyAnim) {
@@ -203,7 +210,7 @@ public class GameActivity extends Activity {
             nextImage();
         }
 
-        return super.onKeyUp(keyCode, event);
+        return true;
     }
 
     public void setFastMode() {
