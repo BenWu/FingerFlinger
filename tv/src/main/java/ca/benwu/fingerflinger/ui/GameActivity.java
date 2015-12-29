@@ -9,6 +9,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import ca.benwu.fingerflinger.utils.Logutils;
  * Created by Ben Wu on 12/12/2015.
  */
 public class GameActivity extends Activity {
-/*
+
     private static final String TAG = "GameActivity";
 
     private final String TAG_PAUSE_FRAG = "PAUSE_FRAG";
@@ -62,8 +63,6 @@ public class GameActivity extends Activity {
     private int mScoreCount = 0;
     private int mErrorCount = 0;
     private TextView mScoreBox;
-
-    private View mPauseButton;
 
     private int mTimeLimit = 1000;
     private CountDownTimer mTimer;
@@ -143,35 +142,6 @@ public class GameActivity extends Activity {
         params.height = width;
         params.width = height+100;
         mTimeLimitBar.requestLayout();
-
-        mPauseButton = findViewById(R.id.gamePauseButton);
-        mPauseButton.setVisibility(View.INVISIBLE);
-
-        mPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!mGamePaused && !mGameEnded) {
-                    openPauseMenu();
-                }
-            }
-        });
-
-        getFragmentManager().beginTransaction().replace(R.id.inGameContainer, GameOptionsFragment.create(this, true)).commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        View decorView = getWindow().getDecorView();
-
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
     }
 
     @Override
@@ -186,73 +156,33 @@ public class GameActivity extends Activity {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = MotionEventCompat.getActionMasked(event);
-
-        if(mGameEnded || mGamePaused) {
-            return super.onTouchEvent(event);
-        }
-
-        switch(action) {
-            case (MotionEvent.ACTION_DOWN) :
-                Logutils.d(TAG,"Action was DOWN");
-                mFromX = (int) event.getAxisValue(MotionEvent.AXIS_X);
-                mFromY = (int) event.getAxisValue(MotionEvent.AXIS_Y);
-                break;
-            case (MotionEvent.ACTION_MOVE) :
-                //Logutils.d(TAG,"Action was MOVE");
-                break;
-            case (MotionEvent.ACTION_UP) :
-                Logutils.d(TAG, "Action was UP");
-                mToX = (int) event.getAxisValue(MotionEvent.AXIS_X);
-                mToY = (int) event.getAxisValue(MotionEvent.AXIS_Y);
-                onTouchReleased();
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    private void onTouchReleased() {
-        int deltaX = mToX - mFromX;
-        int deltaY = mToY - mFromY;
-        int delta = (int) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
         boolean correctMovement = false;
 
-        Logutils.d(TAG,
-                "Motion: from (" + mFromX + ", " + mFromY + ") " +
-                        "to (" + mToX + ", " + mToY + "), " +
-                        "Change: (" + deltaX + ", " + deltaY + ")");
-
-        if(delta < 20) {
-            Logutils.d(TAG, "No move");
-            return;
-        } else if(Math.abs(deltaX) > Math.abs(deltaY)) {
-            if(deltaX > 0) {
-                Logutils.d(TAG, "Drag right");
-                if(!mNoAnim && !mWackyAnim) {
-                    mGameFlipper.setOutAnimation(mSlideOutRight);
-                }
-                correctMovement = mCurrentDirection == RIGHT_ARROW;
-            } else {
-                Logutils.d(TAG, "Drag left");
-                if(!mNoAnim && !mWackyAnim) {
-                    mGameFlipper.setOutAnimation(mSlideOutLeft);
-                }
-                correctMovement = mCurrentDirection == LEFT_ARROW;
-            }
-        } else if(deltaY > 0) {
-            Logutils.d(TAG, "Drag down");
-            if(!mNoAnim && !mWackyAnim) {
-                mGameFlipper.setOutAnimation(mSlideOutBottom);
-            }
-                correctMovement = mCurrentDirection == DOWN_ARROW;
-        } else {
-            Logutils.d(TAG, "Drag up");
+        if(keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+            Logutils.d(TAG, "Click up");
             if(!mNoAnim && !mWackyAnim) {
                 mGameFlipper.setOutAnimation(mSlideOutTop);
             }
             correctMovement = mCurrentDirection == UP_ARROW;
+        } else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+            Logutils.d(TAG, "Click down");
+            if(!mNoAnim && !mWackyAnim) {
+                mGameFlipper.setOutAnimation(mSlideOutBottom);
+            }
+            correctMovement = mCurrentDirection == DOWN_ARROW;
+        } else if(keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            Logutils.d(TAG, "Click right");
+            if(!mNoAnim && !mWackyAnim) {
+                mGameFlipper.setOutAnimation(mSlideOutRight);
+            }
+            correctMovement = mCurrentDirection == RIGHT_ARROW;
+        } else if(keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            Logutils.d(TAG, "Click left");
+            if(!mNoAnim && !mWackyAnim) {
+                mGameFlipper.setOutAnimation(mSlideOutLeft);
+            }
+            correctMovement = mCurrentDirection == LEFT_ARROW;
         }
 
         if(mWackyAnim) {
@@ -272,20 +202,8 @@ public class GameActivity extends Activity {
             resetTimer();
             nextImage();
         }
-    }
 
-    public void openAnimOptions() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.inGameContainer, GameOptionsFragment.create(this, false), "ANIM_MODE").commit();
-    }
-
-    public void closeAnimOptions() {
-        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("ANIM_MODE")).commit();
-        unpause();
-        if(mTimeAttackTimer != null) {
-            mTimeAttackTimer.start();
-        }
-        mGameStarted = true;
+        return super.onKeyUp(keyCode, event);
     }
 
     public void setFastMode() {
@@ -402,13 +320,12 @@ public class GameActivity extends Activity {
         mGameEnded = true;
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, fragment).commit();
         findViewById(R.id.inGameContainer).startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_from_top));
-        mPauseButton.setVisibility(View.INVISIBLE);
 
         insertScore();
     }
 
     private void insertScore() {
-        String gameMode;
+        /*String gameMode;
         String animMode;
         String date = DateUtils.getDateStringFromMilliseconds(System.currentTimeMillis(), DateUtils.DATE_FORMAT);
 
@@ -432,7 +349,7 @@ public class GameActivity extends Activity {
             animMode = ScoresColumns.ANIM_MODE_NORMAL;
         }
 
-        new ScoresDbHelper(this).insert(mScoreCount, gameMode, animMode, ScoresColumns.PLATFORM_MOBILE, date);
+        new ScoresDbHelper(this).insert(mScoreCount, gameMode, animMode, ScoresColumns.PLATFORM_MOBILE, date);*/
     }
 
     private void nextImage() {
@@ -485,7 +402,6 @@ public class GameActivity extends Activity {
         getFragmentManager().beginTransaction().replace(R.id.inGameContainer, new PausedFragment(), TAG_PAUSE_FRAG).commit();
         findViewById(R.id.inGameContainer).startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_from_top));
         mGamePaused = true;
-        mPauseButton.setVisibility(View.INVISIBLE);
     }
 
     public void unpause() {
@@ -496,7 +412,6 @@ public class GameActivity extends Activity {
         mGamePaused = false;
         nextImage();
         resetTimer();
-        mPauseButton.setVisibility(View.VISIBLE);
     }
 
     public void openQuitConfirmation() {
@@ -526,5 +441,5 @@ public class GameActivity extends Activity {
         } else {
             openPauseMenu();
         }
-    }*/
+    }
 }

@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Finger Flinger</string>
+
+    <string name="paused">Paused</string>
+
+    <string name="game_over">Game Over</string>
+    <string name="score_text">You scored %s points</string>
+    <string name="score_text_single">You scored 1 point</string>
+
+    <string name="confirmation_dialog">Are you sure?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="quit_button">Quit</string>
+    <string name="resume_button">Resume</string>
+    <string name="ok_button">OK</string>
 </resources>
