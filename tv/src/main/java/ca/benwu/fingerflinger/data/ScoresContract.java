@@ -27,7 +27,7 @@ public class ScoresContract {
         public static final String ANIM_MODE_NORMAL = "Normal";
         public static final String ANIM_MODE_WACKY = "Wacky";
         public static final String ANIM_MODE_EASY = "Easy";
-        public static final String ANIM_MODE_NONE = "None";
+        public static final String ANIM_MODE_NONE = "No Animation";
 
         public static final String FOR_GAME_MODE = COLUMN_GAME_MODE + " =?";
     }

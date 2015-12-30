@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <ca.benwu.fingerflinger.view.CustomBoldTextView
+            android:text="@string/mode_normal"
+            android:textSize="40sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="20dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:visibility="invisible"
+                android:id="@+id/scoresList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <ca.benwu.fingerflinger.view.CustomBoldTextView
+                android:text="No scores found"
+                android:visibility="invisible"
+                android:id="@+id/noScoresText"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <ca.benwu.fingerflinger.view.CustomBoldTextView
+            android:text="@string/mode_fast"
+            android:textSize="40sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="20dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:visibility="invisible"
+                android:id="@+id/scoresList2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <ca.benwu.fingerflinger.view.CustomBoldTextView
+                android:text="No scores found"
+                android:visibility="invisible"
+                android:id="@+id/noScoresText2"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <ca.benwu.fingerflinger.view.CustomBoldTextView
+            android:text="@string/mode_time_attack"
+            android:textSize="40sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="20dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:visibility="invisible"
+                android:id="@+id/scoresList3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <ca.benwu.fingerflinger.view.CustomBoldTextView
+                android:text="No scores found"
+                android:visibility="invisible"
+                android:id="@+id/noScoresText3"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

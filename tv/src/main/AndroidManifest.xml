@@ -31,6 +31,8 @@
         </activity>
 
         <activity android:name=".ui.GameActivity" />
+
+        <activity android:name=".ui.ScoresActivity" />
     </application>
 
 </manifest>

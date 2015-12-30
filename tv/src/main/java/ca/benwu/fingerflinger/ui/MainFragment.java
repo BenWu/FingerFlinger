@@ -63,8 +63,8 @@ import ca.benwu.fingerflinger.utils.Logutils;
 public class MainFragment extends BrowseFragment {
     private static final String TAG = "MainFragment";
 
-    private static final int GRID_ITEM_WIDTH = 200;
-    private static final int GRID_ITEM_HEIGHT = 200;
+    private static final int GRID_ITEM_WIDTH = 150;
+    private static final int GRID_ITEM_HEIGHT = 150;
 
     private ArrayObjectAdapter mRowsAdapter;
     private Drawable mDefaultBackground;
@@ -99,20 +99,20 @@ public class MainFragment extends BrowseFragment {
     private void loadRows() {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
-        ArrayObjectAdapter gameModeAdapter = new ArrayObjectAdapter(new GameModePresenter());
+        ArrayObjectAdapter animModeAdapter = new ArrayObjectAdapter(new GridItemPresenter());
+        animModeAdapter.addAll(0, ANIM_MODES);
+        mRowsAdapter.add(new ListRow(0, new HeaderItem("Animation Modes"), animModeAdapter));
 
+        ArrayObjectAdapter gameModeAdapter = new ArrayObjectAdapter(new GameModePresenter());
         gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_NORMAL));
         gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_FAST));
         gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_TIME_ATTACK));
         gameModeAdapter.add(new GameMode(getActivity(), GameMode.MODE_INFINITE));
-
         mRowsAdapter.add(new ListRow(new HeaderItem("Game Modes"), gameModeAdapter));
 
-        ArrayObjectAdapter animModeAdapter = new ArrayObjectAdapter(new GridItemPresenter());
-
-        animModeAdapter.addAll(0, ANIM_MODES);
-
-        mRowsAdapter.add(new ListRow(new HeaderItem("Animation Modes"), animModeAdapter));
+        ArrayObjectAdapter scoresRowAdapter = new ArrayObjectAdapter(new GridItemPresenter());
+        scoresRowAdapter.add("Scores");
+        mRowsAdapter.add(new ListRow(1, new HeaderItem("Leaderboards"), scoresRowAdapter));
 
         setAdapter(mRowsAdapter);
     }
@@ -154,11 +154,16 @@ public class MainFragment extends BrowseFragment {
 
                 startActivity(intent, options);
             } else if (item instanceof String) {
-                mSelectedAnimView.setBackgroundColor(getResources().getColor(R.color.default_background));
-                mSelectedAnimView = itemViewHolder.view;
-                mSelectedAnimView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mSelectedAnim = ANIM_MODES.indexOf(item);
-                Logutils.d(TAG, "Selected anim mode: " + mSelectedAnim);
+                if(row.getId() == 0) {
+                    mSelectedAnimView.setBackgroundColor(getResources().getColor(R.color.default_background));
+                    mSelectedAnimView = itemViewHolder.view;
+                    mSelectedAnimView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mSelectedAnim = ANIM_MODES.indexOf(item);
+                    Logutils.d(TAG, "Selected anim mode: " + mSelectedAnim);
+                } else if(row.getId() == 1) {
+                    Intent intent = new Intent(getActivity(), ScoresActivity.class);
+                    startActivity(intent);
+                }
             }
         }
     }
