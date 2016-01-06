@@ -4,6 +4,7 @@ Finger flinger is a simple Android gesture detection game for mobile, Android we
 The game involves swiping in the direction of the arrow that appears before time runs out.  Time decreases each time an arrow is swiped.
 
 There are four game modes: Normal, Fast Mode (less time), Time Attack (swipe as many arrows in one minute), and Infinite Lives.
+
 There are four arrow animation modes: Normal (arrows fade in and slide out in the direction they are swiped), Easy mode (arrows slide in the direction they are pointing), Wacky mode (random in and out animations), and No Animations.
 
 ###Screenshots:
@@ -14,7 +15,7 @@ There are four arrow animation modes: Normal (arrows fade in and slide out in th
 <img src="http://benwu.ca/fingerflinger/mobile_ingame_small.png" width="250" />
 <img src="http://benwu.ca/fingerflinger/mobile_scoreboard_small.png" width="250" />
 
-#####Tablet main menu and in-game:
+######Tablet main menu and in-game:
 
 <img src="http://benwu.ca/fingerflinger/tablet_menu.png" width="400" />
 <img src="http://benwu.ca/fingerflinger/tablet_ingame.png" width="400" />
