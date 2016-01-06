@@ -1,5 +1,5 @@
 # Finger Flinger
-Finger flinger is a simple Android gesture detection game for mobile, Android wear, and Android TV.
+Finger flinger is a simple Android gesture detection game for mobile, Android wear, and Android TV built entirely with the native Android framework.
 
 The game involves swiping in the direction of the arrow that appears before time runs out.  Time decreases each time an arrow is swiped.
 
