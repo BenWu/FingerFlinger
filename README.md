@@ -26,7 +26,7 @@ There are four arrow animation modes: Normal (arrows fade in and slide out in th
 <img src="http://benwu.ca/fingerflinger/tv_ingame.png" width="400" />
 <img src="http://benwu.ca/fingerflinger/tv_scoreboard.png" width="400" />
 
-####Wear main menu and in-game:
+######Wear main menu and in-game:
 
 <img src="http://benwu.ca/fingerflinger/wear_menu.png" width="250" />
 <img src="http://benwu.ca/fingerflinger/wear_ingame.png" width="250" />
